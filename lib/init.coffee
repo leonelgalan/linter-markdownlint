@@ -47,7 +47,6 @@ module.exports =
         return new Promise (resolve, reject) =>
           filePath = TextEditor.getPath()
           lines = []
-          console.log Command.getExecutablePath()
           process = new BufferedProcess
             command: Command.getExecutablePath()
             args: [filePath]
