@@ -2,10 +2,14 @@
   "name": "linter-markdownlint",
   "activationCommands": {},
   "main": "./lib/init",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lint Markdown with mdl",
-  "keywords": ["linter", "mdl", "markdown", "markdownlint"],
-  "activationCommands": {},
+  "keywords": [
+    "linter",
+    "mdl",
+    "markdown",
+    "markdownlint"
+  ],
   "repository": "https://github.com/lloeki/linter-markdownlint",
   "license": "MIT",
   "engines": {
