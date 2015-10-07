@@ -40,6 +40,7 @@ module.exports =
     @subscriptions.dispose()
   provideLinter: ->
     provider =
+      name: 'markdownlint'
       grammarScopes: ['source.gfm', 'source.pfm']
       scope: 'file'
       lintOnFly: false
