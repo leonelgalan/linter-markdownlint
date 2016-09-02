@@ -5,13 +5,16 @@ class Parser
     if m = /(.+):([0-9]+): +(MD[0-9]{3}) +(.+)/.exec line
       type: 'Error'
       message: "#{m[3]}: #{m[4]}"
+      lint: m[3]
       lineStart: m[2]
       lineEnd: m[2]
       charStart: 1
       charEnd: 1
-  @parse: (data) =>
+  @parse: (data, ignoreLints) =>
     errors = (@match(line) for line in data)
-    errors = (error for error in errors when error?)
+    ignoreLints = ',' + ignoreLints.replace(/[^A-Za-z0-9,]/g, '') + ','
+    errors = (error for error in errors when error? and
+              ignoreLints.indexOf(',' + error.lint + ',') == -1)
     if errors.length == 0
       passed: true
     else
@@ -31,11 +34,18 @@ module.exports =
       type: 'string'
       default: 'mdl'
       description: 'Path to mdl executable'
+    ignoreLints:
+      type: 'string'
+      default: ''
+      description: 'Comma-separated list of Lints. Example: MD001,MD013'
   activate: ->
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.observe 'linter-example.executablePath',
+    @subscriptions.add atom.config.observe 'linter-markdownlint.executablePath',
       (executablePath) ->
         Command.setExecutablePath(executablePath)
+    @subscriptions.add atom.config.observe 'linter-markdownlint.ignoreLints',
+      (ignoreLints) ->
+        @ignoreLints = ignoreLints
   deactivate: ->
     @subscriptions.dispose()
   provideLinter: ->
@@ -55,7 +65,7 @@ module.exports =
               lines.push(line) for line in data.split('\n')
             exit: (code) ->
               return resolve [] if code is 0
-              info = Parser.parse lines
+              info = Parser.parse(lines, @ignoreLints)
               return resolve [] unless info?
               return resolve [] if info.passed
               resolve info.errors.map (error) ->
