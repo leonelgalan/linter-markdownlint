@@ -32,6 +32,7 @@ module.exports =
       default: 'mdl'
       description: 'Path to mdl executable'
   activate: ->
+    @reportedBroken = false
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.config.observe 'linter-example.executablePath',
       (executablePath) ->
@@ -54,6 +55,7 @@ module.exports =
             stdout: (data) ->
               lines.push(line) for line in data.split('\n')
             exit: (code) ->
+              @reportedBroken = false
               return resolve [] if code is 0
               info = Parser.parse lines
               return resolve [] unless info?
@@ -69,8 +71,19 @@ module.exports =
                 ]
 
           process.onWillThrowError ({error,handle}) ->
+            # Markdown linter not found, only warn once
+            errorCode = "#{error.message}"
+            if error.code == 'ENOENT'
+              if @reportedBroken
+                handle()
+                resolve []
+                return
+              @reportedBroken = true
+
+              errorCode = "Cannot find markdown lint on specified path."
+
             atom.notifications.addError "Failed to run #{@executablePath}",
-              detail: "#{error.message}"
+              detail: errorCode
               dismissable: true
             handle()
             resolve []
