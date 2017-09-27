@@ -2,7 +2,7 @@
   "name": "linter-markdownlint",
   "activationCommands": {},
   "main": "./lib/init",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Lint Markdown with mdl",
   "keywords": [
     "linter",
@@ -10,7 +10,7 @@
     "markdown",
     "markdownlint"
   ],
-  "repository": "https://github.com/lloeki/linter-markdownlint",
+  "repository": "https://github.com/leonelgalan/linter-markdownlint",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
