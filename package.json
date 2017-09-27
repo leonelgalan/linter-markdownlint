@@ -10,7 +10,7 @@
     "markdown",
     "markdownlint"
   ],
-  "repository": "https://github.com/lloeki/linter-markdownlint",
+  "repository": "https://github.com/leonelgalan/linter-markdownlint",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
