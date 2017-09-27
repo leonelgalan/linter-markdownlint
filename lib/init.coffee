@@ -47,8 +47,10 @@ module.exports =
       lint: (TextEditor) =>
         return new Promise (resolve, reject) =>
           filePath = TextEditor.getPath()
+          fileDir = atom.project.relativizePath(filePath)[0]
           lines = []
           process = new BufferedProcess
+            options: cwd: fileDir
             command: Command.getExecutablePath()
             args: [filePath]
             stdout: (data) ->
