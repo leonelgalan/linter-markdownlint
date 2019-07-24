@@ -1,7 +1,7 @@
 {
   "name": "linter-markdownlint",
   "activationCommands": {},
-  "main": "./lib/init",
+  "main": "./lib/index",
   "version": "1.0.2",
   "description": "Lint Markdown with mdl",
   "keywords": [
@@ -19,7 +19,7 @@
   "providedServices": {
     "linter": {
       "versions": {
-        "1.0.0": "provideLinter"
+        "2.0.0": "provideLinter"
       }
     }
   }

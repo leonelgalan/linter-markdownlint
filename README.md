@@ -32,7 +32,8 @@ You can configure _linter-markdownlint_ by editing ~/.atom/config.cson (choose _
 
 ```cson
 'linter-markdownlint':
-  executablePath: null
+  executablePath: 'mdl'
+  severity: 'error'
 ```
 
 Run `which mdl` to find the path, if you using _rbenv_ run `rbenv which mdl`
